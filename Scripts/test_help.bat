@@ -1,0 +1,1 @@
+python movenet_inference.py -h

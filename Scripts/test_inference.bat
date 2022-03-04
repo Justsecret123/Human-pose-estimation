@@ -1,0 +1,1 @@
+python movenet_inference.py -model ../Model/TFLite/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite -source "../Test gifs/Ngannou_jairzinho.gif" -output result.gif -fps 10 -thres 0.11 -thickness 2
