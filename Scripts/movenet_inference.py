@@ -8,22 +8,36 @@ Created on Fri Mar  4 10:24:14 2022
 import argparse
 import tensorflow as tf
 import time 
+import cv2
 
 def run_inference(parser):
     
-    print("Running inference : ")
+    print("\n\nRunning inference\n-----------------------")
+    
+    # Parse the command line arguments
     args = parser.parse_args()
     
-
-def load_model():
+    # Get the args as a dict(key,value)
+    variables = vars(args)
     
-    print("\n\nLoading the model...\n\n")
+    # Get the model and its parameters
+    interpreter, input_details, output_details  = load_model(variables["model"])
+    
+    # Load the gif and its parameters
+    gif, frame_count, video_writer = load_gif(variables["source"])
+        
+    #print(f"Vars: {variables}\n")
+    
+
+def load_model(path):
+    
+    print("Loading the model...\n-----------------------")
     
     # Intialize the timer
     timer = time.time()
     
     # Load the interpreter (model)
-    interpreter = tf.lite.Interpreter(model_path="../Model/TFLite/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite")
+    interpreter = tf.lite.Interpreter(model_path=path)
     
     #Get the input and output details
     input_details = interpreter.get_input_details()
@@ -31,10 +45,29 @@ def load_model():
     
     # Calculate and display the elapsed time
     timer = round(time.time() - timer,2)
-    print(f"\n\nElapsed time: {timer}s\n\n")
+    print(f"Model loaded in: {timer}s\n")
     
     return interpreter, input_details, output_details
 
+def load_gif(path):
+    
+    print("Loading the gif...\n-----------------------")
+    
+    # Intialize the timer
+    timer = time.time()
+    
+    # Load the gif 
+    gif = cv2.VideoCapture(path)
+     
+    # Get the parameters 
+    frame_count = int(gif.get(cv2.CAP_PROP_FRAME_COUNT))
+    video_writer = []
+    
+    # Calculate and display the elapsed time
+    timer = round(time.time() - timer,2)
+    print(f"Gif loaded in: {timer}s\n")
+     
+    return gif, frame_count, video_writer
 
 def create_parser():
     
@@ -43,11 +76,14 @@ def create_parser():
 
     #Add arguments 
     
+    # Model path 
+    parser.add_argument("-model", help="Model path")
+    
     # Source 
-    parser.add_argument("-source", type=ascii, help="Source gif")
+    parser.add_argument("-source", help="Source gif")
     
     # Destination
-    parser.add_argument("-output", type=ascii, help="Destination of the output gif")
+    parser.add_argument("-output", help="Destination of the output gif")
     
     # Frame reate
     parser.add_argument("-fps", type=int, help="Frame rate")
@@ -58,13 +94,7 @@ def create_parser():
     # Thickness
     parser.add_argument("-thickness", type=int, help="Line thickness")
     
-    
-    
-    
-    
     return parser
-
-
 
 
 if __name__ == "__main__": 
@@ -72,10 +102,5 @@ if __name__ == "__main__":
     # Initialize the parser
     parser = create_parser()
     
-    # Load the model
-    movenet, input_details, output_details = load_model()
-    
-    # Detect 
-    
-    
+    # Main loop
     run_inference(parser)
