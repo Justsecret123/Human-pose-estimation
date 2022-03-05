@@ -6,18 +6,15 @@ Created on Fri Mar  4 10:24:14 2022
 """
 
 import argparse
-import tensorflow as tf
 import time
 import cv2
-import numpy as np
 import imageio
+import numpy as np
+import tensorflow as tf
 
-"""
-Constants
-"""
 
 # Dimensions
-width = height = 256
+WIDTH = HEIGHT = 256
 
 # Colors
 cyan = (255, 255, 0)
@@ -46,10 +43,10 @@ EDGE_COLORS = {
 }
 
 
-def main(parser):
+def main(main_parser):
 
     # Parse the command line arguments
-    args = parser.parse_args()
+    args = main_parser.parse_args()
 
     # Get the args as a dict(key,value)
     variables = vars(args)
@@ -99,7 +96,7 @@ def inference(
     output_frames,
     thickness,
     threshold,
-    initial_shape,
+    initial_shape
 ):
 
     while gif.isOpened():
@@ -113,7 +110,7 @@ def inference(
 
         # Copy the frame
         image = frame.copy()
-        image = cv2.resize(image, (width, height))
+        image = cv2.resize(image, (WIDTH, HEIGHT))
 
         # Create a batch (input tensor)
         input_tensor = tf.expand_dims(image, axis=0)
@@ -179,7 +176,7 @@ def loop(frame, keypoints, threshold, thickness):
         denormalized_coordinates = draw_keypoints(frame, instance, threshold)
         # Draw the edges
         draw_edges(
-            denormalized_coordinates, frame, instance, EDGE_COLORS, threshold, thickness
+            denormalized_coordinates, frame, EDGE_COLORS, threshold, thickness
         )
 
 
@@ -236,7 +233,7 @@ def load_gif(path):
 def draw_keypoints(frame, keypoints, threshold):
 
     # Denormalize the coordinates : multiply the normalized coordinates by the input_size(width,height)
-    denormalized_coordinates = np.squeeze(np.multiply(keypoints, [width, height, 1]))
+    denormalized_coordinates = np.squeeze(np.multiply(keypoints, [WIDTH, HEIGHT, 1]))
 
     # Iterate
     for keypoint in denormalized_coordinates:
@@ -245,7 +242,7 @@ def draw_keypoints(frame, keypoints, threshold):
         keypoint_y, keypoint_x, keypoint_confidence = keypoint
 
         if keypoint_confidence > threshold:
-            """ "
+            """
             Draw the circle
             Note : A thickness of -1 px will fill the circle shape by the specified color.
             """
@@ -260,16 +257,16 @@ def draw_keypoints(frame, keypoints, threshold):
     return denormalized_coordinates
 
 
-def draw_edges(denormalized_coordinates, frame, keypoints, edges_colors, threshold, thickness):
+def draw_edges(denormalized_coordinates, frame, edges_colors, threshold, thickness):
 
     # Iterate through
     for edge, color in edges_colors.items():
 
         # Get the dict value associated to the actual edge
-        p1, p2 = edge
+        line_start, line_end = edge
         # Get the points
-        y1, x1, confidence_1 = denormalized_coordinates[p1]
-        y2, x2, confidence_2 = denormalized_coordinates[p2]
+        y1, x1, confidence_1 = denormalized_coordinates[line_start]
+        y2, x2, confidence_2 = denormalized_coordinates[line_end]
 
         # Draw the line from point 1 to point 2, the confidence > threshold
         if (confidence_1 > threshold) and (confidence_2 > threshold):
@@ -278,14 +275,14 @@ def draw_edges(denormalized_coordinates, frame, keypoints, edges_colors, thresho
                 pt1=(int(x1), int(y1)),
                 pt2=(int(x2), int(y2)),
                 color=color,
-                thickness=2,
+                thickness=thickness,
                 lineType=cv2.LINE_AA,  # Gives anti-aliased (smoothed) line which looks great for curves.
             )
 
 
 def save_results(output_frames, frame_rate, destination):
 
-    print("\n\Saving the results...\n-----------------------")
+    print("\nSaving the results...\n-----------------------")
 
     # Stack the output frames to compose a sequence
     output = np.stack(output_frames, axis=0)
