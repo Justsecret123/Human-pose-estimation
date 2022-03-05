@@ -21,9 +21,11 @@ I found multipose estimation Notebooks and codes not so explicit or even underst
 
 ## Command line runner
 - [Test script](/Scripts/movenet_inference.py)
-- [Bat file for a sample test](/Scripts/test_inference.bat)
+- [Bat file for a sample test](/Scripts/test_inference.bat) : requires the model path to be *../Model/TFLite/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite*. You can [download it directly from TFHub](https://tfhub.dev/google/lite-model/movenet/multipose/lightning/tflite/float16/1)
 > Args :
 ![Command_line_args](/Screenshots/command_line_args.PNG)
+
+
 
 ## Notebook 
 
