@@ -16,7 +16,7 @@ import tensorflow as tf
 # Dimensions
 WIDTH = HEIGHT = 256
 
-# Colors
+# Colors : RGB content
 cyan = (255, 255, 0)
 magenta = (255, 0, 255)
 
