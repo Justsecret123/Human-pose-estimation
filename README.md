@@ -1,8 +1,12 @@
-# Human-pose-estimation ![Language_support](https://img.shields.io/pypi/pyversions/Tensorflow) ![Last_commit](https://img.shields.io/github/last-commit/JustSecret123/Human-pose-estimation) ![Workflow](https://img.shields.io/github/workflow/status/JustSecret123/Human-pose-estimation/Pylint/main) ![Tensorflow_version](https://img.shields.io/badge/Tensorflow%20version-2.6.2-orange)
+# Human-pose-estimation ![Language_support](https://img.shields.io/pypi/pyversions/Tensorflow) ![Last_commit](https://img.shields.io/github/last-commit/JustSecret123/Human-pose-estimation) ![Workflow](https://img.shields.io/github/workflow/status/JustSecret123/Human-pose-estimation/Pylint/main) ![Tensorflow_version](https://img.shields.io/badge/Tensorflow%20version-2.6.2-orange) 
 
 A quick tutorial on multi-pose estimation with OpenCV, Tensorflow and MoveNet lightning.
 
-> **Also available on [Kaggle](https://www.kaggle.com/ibrahimserouis99/human-pose-estimation-with-movenet)
+> **Also available on [Kaggle](https://www.kaggle.com/ibrahimserouis99/human-pose-estimation-with-movenet) 
+<a href="https://www.linkedin.com/in/ibrahim-serouis-b05378181/">
+  <img src="https://img.shields.io/badge/LinkedIn-Ibrahim%20Serouis-blue?link=http://left&link=http://right)"/>
+</a>
+
 
 # Motivation 
 
