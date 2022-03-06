@@ -12,7 +12,7 @@ I found multipose estimation Notebooks and codes not so explicit or even underst
 
 - Model type : MoveNet 
 - Pose estimation method : multipose, bottom-up
-- Keypoints count : 17
+- Keypoint count : 17
 
 # Results (example)
 ![Results](https://github.com/Justsecret123/Human-pose-estimation/blob/main/Test%20gifs/results.gif)
