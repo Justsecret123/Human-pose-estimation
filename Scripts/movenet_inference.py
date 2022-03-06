@@ -44,7 +44,8 @@ EDGE_COLORS = {
 
 
 def main(main_parser):
-
+    """Main loop"""
+    
     # Parse the command line arguments
     args = main_parser.parse_args()
 
@@ -98,7 +99,8 @@ def inference(
     threshold,
     initial_shape
 ):
-
+    """Runs inferences on each frame"""
+    
     while gif.isOpened():
 
         # Capture the frame
@@ -134,7 +136,7 @@ def inference(
         results = interpreter.get_tensor(output_details[0]["index"])
 
         """
-        Output shape :  [1, 6, 56] ---> (batch size), (instances), (xy keypoints coordinates and score from [0:50] 
+        Output shape : [1, 6, 56] ---> (batch size), (instances), (xy keypoints coordinates and score from [0:50] 
         and [ymin, xmin, ymax, xmax, score]
         for the remaining elements)
         First, let's resize it to a more convenient shape, following this logic : 
@@ -169,7 +171,10 @@ def inference(
 
 
 def loop(frame, keypoints, threshold, thickness):
-
+    """Loops through the inference results for each human,
+        then proceeds to draw the associated keypoints and edges
+    """
+    
     # Loop through the results
     for instance in keypoints:
         # Draw the keypoints and get the denormalized coordinates
@@ -181,6 +186,7 @@ def loop(frame, keypoints, threshold, thickness):
 
 
 def load_model(path):
+    """Loads the TFLite model"""
 
     print("Loading the model...\n-----------------------")
 
@@ -202,6 +208,7 @@ def load_model(path):
 
 
 def load_gif(path):
+    """Loads the gif and returns its parameters"""
 
     print("Loading the gif...\n-----------------------")
 
@@ -231,6 +238,7 @@ def load_gif(path):
 
 
 def draw_keypoints(frame, keypoints, threshold):
+    """Draws the keypoints on a frame"""
 
     # Denormalize the coordinates : multiply the normalized coordinates by the input_size(width,height)
     denormalized_coordinates = np.squeeze(np.multiply(keypoints, [WIDTH, HEIGHT, 1]))
@@ -258,6 +266,7 @@ def draw_keypoints(frame, keypoints, threshold):
 
 
 def draw_edges(denormalized_coordinates, frame, edges_colors, threshold, thickness):
+    """Draws the edges on a frame"""
 
     # Iterate through
     for edge, color in edges_colors.items():
@@ -276,11 +285,12 @@ def draw_edges(denormalized_coordinates, frame, edges_colors, threshold, thickne
                 pt2=(int(x2), int(y2)),
                 color=color,
                 thickness=thickness,
-                lineType=cv2.LINE_AA,  # Gives anti-aliased (smoothed) line which looks great for curves.
+                lineType=cv2.LINE_AA,  # Gives anti-aliased (smoothed) line which looks great for curves
             )
 
 
 def save_results(output_frames, frame_rate, destination):
+    """Converts the output stack to a gif"""
 
     print("\nSaving the results...\n-----------------------")
 
@@ -293,7 +303,8 @@ def save_results(output_frames, frame_rate, destination):
 
 
 def create_parser():
-
+    """Creates a parser for the command line runner"""
+    
     # Create the parser
     parser = argparse.ArgumentParser(description="Run inferences on a gif")
 
