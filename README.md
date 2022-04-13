@@ -10,7 +10,7 @@ A quick tutorial on multi-pose estimation with OpenCV, Tensorflow and MoveNet li
 
 # Motivation 
 
-I found multipose estimation Notebooks and codes not so explicit or even understandable for pure beginners. Moreover, most of the available tutorials focus on single-pose estimation, with only one instance (human).  As a result, the idea of writing my own tutorial naturally came to me. After some research and a bit of styling, code cleaning, presentation...I've finally made it public. 
+I found multipose estimation Notebooks and codes not so explicit or even understandable for pure beginners. Moreover, most of the available tutorials focus on single-pose estimation, with only one instance (human).  As a result, the idea of writing my own tutorial naturally came to me. After some research and a bit of styling, code cleaning, presentation...I finally made it public. 
 
 # Model info 
 
