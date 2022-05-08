@@ -19,7 +19,7 @@ I found multipose estimation Notebooks and codes not so explicit or even underst
 - Keypoint count : 17
 
 # Results (example)
-![Results](https://github.com/Justsecret123/Human-pose-estimation/blob/main/Test%20gifs/results.gif)
+![Results](https://github.com/Justsecret123/Human-pose-estimation/blob/main/Screenshots/results.gif)
 
 # How to use 
 
